@@ -6,6 +6,7 @@ const db = require("./db/index")
 
 
 
+
 const app = express()
 dotenv.config()
 app.use(express.json());
