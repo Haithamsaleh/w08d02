@@ -1,12 +1,16 @@
 const userModel = require("./../../db/models/user")
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
+const SALT= Number(process.env.SALT)
 
-
-
-const register = (req, res) => {
+const register = async (req, res) => {
     const {email, password, role} = req.body;
+    const savedEmail = email.toLowerCase();
+    const hashedPassword = await bcrypt.hash(password, SALT)
     const newUser = new userModel({
-        email: email,
-        password: password,
+        email: savedemail,
+        password: hashedpassword,
         role
     })
     newUser 
@@ -27,7 +31,7 @@ const login = (req, res)=> {
         // console.log(result);
         if(result){
             if(result.email == email){
-                if(result.password == password){
+                if(hashedpassword){
                     res.status(200).json(result)
                 }else{
                     res.status(400).json("invalid email or passwoer")
